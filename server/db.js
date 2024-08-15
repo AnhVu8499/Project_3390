@@ -1,6 +1,4 @@
 const mongoose = require("mongoose")
-require("dotenv").config();
-
 const uri = process.env.DB;
 
 module.exports = () => {
