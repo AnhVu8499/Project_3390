@@ -4,12 +4,19 @@ const mongoose = require('mongoose')
 const connection = require('./db')
 const serverless = require('serverless-http');
 const serviceRoutes = require("./routes/service")
+const cors = require('cors')
 const { app } = require('./models/service')
 
 connection()
 
 // middlewares
 app.use(express.json());
+app.use(cors({
+    origin: 'https://salonfe.onrender.com', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
+
 
 app.use("/main", serviceRoutes)
 app.get('/api', (req, res) => {

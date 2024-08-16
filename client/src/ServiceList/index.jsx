@@ -13,7 +13,7 @@ const ServiceList = () => {
         };
 
         try {
-            const response = await fetch('https://salonbe-mcw5.onrender.com', { 
+            const response = await fetch('https://salonbe-mcw5.onrender.com/main', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
