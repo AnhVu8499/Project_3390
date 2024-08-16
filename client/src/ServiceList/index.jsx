@@ -13,7 +13,7 @@ const ServiceList = () => {
         };
 
         try {
-            const response = await fetch('https://salonbe-mcw5.onrender.com', {
+            const response = await fetch('https://salonbe-mcw5.onrender.com/main', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,15 +22,16 @@ const ServiceList = () => {
             });
 
             if (response.ok) {
-                alert('Added');
+                alert('Service added successfully');
                 setService('');
                 setPrice('');
             } else {
-                alert('Failed to add');
+                const errorData = await response.json();
+                alert(`Failed to add service: ${errorData.message}`);
             }
         } catch (error) {
             console.error('Error adding service:', error);
-            alert('Error while adding');
+            alert('Network error while adding service');
         }
     }
 
