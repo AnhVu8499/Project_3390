@@ -12,7 +12,7 @@ connection()
 // middlewares
 app.use(express.json());
 
-app.use("/main", serviceRoutes)
+app.use("/", serviceRoutes)
 app.get('/api', (req, res) => {
     res.send('Hello from Express!');
 }); 
