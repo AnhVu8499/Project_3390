@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import ServiceList from './ServiceList';
+import InputService from './InputService';
 
 function App() {
   return (
     <div>
-      <ServiceList/>
+      <InputService/>
     </div>
   )
 }

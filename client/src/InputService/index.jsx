@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ServiceList = () => {
+const InputService = () => {
     const [service, setService] = useState('');
     const [price, setPrice] = useState('');
 
@@ -56,4 +56,4 @@ const ServiceList = () => {
     );
 };
 
-export default ServiceList;
+export default InputService;
