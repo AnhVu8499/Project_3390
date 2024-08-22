@@ -1,0 +1,31 @@
+#date {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width:300px;
+}
+
+input, select {
+    padding:10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding:10px;
+    border:none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color:#fff;
+    cursor:pointer;
+}

@@ -1,39 +1,30 @@
 require("dotenv").config();
-const express = require('express')
-const mongoose = require('mongoose')
-const connection = require('./db')
-const serverless = require('serverless-http');
-const serviceRoutes = require("./routes/service")
-const cors = require('cors')
-const { app } = require('./models/service')
+const express = require('express');
+const mongoose = require('mongoose');
+const connection = require('./db');
+const cors = require('cors');
+const serviceRoutes = require("./routes/service");
+const reservationRoutes = require("./routes/reservation");
 
-connection()
+const app = express();
 
-// middlewares
+connection();
+
 app.use(express.json());
 app.use(cors({
-    origin: 'https://salonfe.onrender.com', 
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
 
+app.use("/storage", reservationRoutes);
+app.use("/main", serviceRoutes);
 
-app.use("/main", serviceRoutes)
 app.get('/api', (req, res) => {
     res.send('Hello from Express!');
-}); 
-app.get("/", async (req, res) => {
-    try {
-        const services = await Service.find({});
-        res.status(200).json(services);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send({ message: "Internal server error" });
-    }
 });
 
-
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
-    console.log("Server is running!!!");
-})
+    console.log(`Server is running on port ${port}`);
+});

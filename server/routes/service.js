@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const { Service } = require('../models/service')
+const { Service } = require('../models/service');
 
 router.post("/", async (req, res) => {
     try {
         console.log("Incoming request body:", req.body);
         const { service, price } = req.body
-        console.log("Received service:", service); // Should log 'haircut'
+        console.log("Received service:", service);
         console.log("Received price:", price); 
         const newService = new Service({ service, price })
         await newService.save()
