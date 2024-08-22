@@ -12,7 +12,6 @@ const reservationSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        match: [/^\+?\d{10,15}$/, 'Please enter a valid phone number'],
         required:true
     },
     date: {

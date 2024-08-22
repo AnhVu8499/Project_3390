@@ -3,7 +3,7 @@ import './styles.css';
 
 const ServiceList = () => {
     const times = [];
-        /* Data models */
+    /* Data models */
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
