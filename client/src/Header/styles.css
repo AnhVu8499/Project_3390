@@ -1,0 +1,100 @@
+/* Base styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.name {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: 'Matemasie', sans-serif;
+    font-size: 2.5em;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color:red;
+    width: 100%;
+    z-index: 1000;
+}
+
+.intro {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 70px; /* Adjust if needed */
+}
+
+#sample-1 {
+    height: 45vh;
+    width: auto;
+    border-radius: 8px;
+}
+
+.main {
+    font-size: 1.5em;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Responsive styles */
+
+/* For tablets and smaller devices */
+@media (max-width: 768px) {
+    .header {
+        padding: 5px;
+    }
+
+    .name {
+        font-size: 2em;
+    }
+
+    .intro {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center items */
+        margin-top: 50px; /* Adjust margin */
+    }
+
+    #sample-1 {
+        height: 35vh; /* Adjust size for smaller screens */
+    }
+
+    .main {
+        font-size: 1.2em;
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+    .header {
+        padding: 3px;
+    }
+
+    .name {
+        font-size: 1.5em;
+    }
+
+    .intro {
+        padding: 10px;
+        margin-top: 40px;
+    }
+
+    #sample-1 {
+        height: 30vh;
+    }
+
+    .main {
+        font-size: 1em;
+    }
+}

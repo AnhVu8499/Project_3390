@@ -10,7 +10,7 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-    phone: {
+    email: {
         type: String,
         required:true
     },
@@ -21,6 +21,13 @@ const reservationSchema = new mongoose.Schema({
     time: {
         type: String,
         required:true
+    },
+    verified: {
+        type: Boolean,
+        default: false
+    },
+    verificationCode :{
+        String
     }
 })
 
