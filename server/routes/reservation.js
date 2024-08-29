@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Reservation = require('../models/reservation');
 const nodemailer = require('nodemailer');
 
+// Temporary in-memory storage for verification codes
 const pendingVerify = {};
 
 // Add reservation and send verification code
@@ -10,15 +11,13 @@ router.post("/", async (req, res) => {
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit code
         const { name, email, date, time } = req.body;
 
+        // Store pending verification data
         pendingVerify[email] = { name, email, date, time, verificationCode };
-
-        // const newReservation = new Reservation({ name, email, date: new Date(date), time, verificationCode, verified: false });
-        // await newReservation.save();
 
         // Send verification code via email
         await sendVerificationEmail(email, verificationCode);
 
-        res.status(201).send({ message: "Reservation created successfully, verification code sent to email", reservation: newReservation });
+        res.status(201).send({ message: "Reservation created successfully, confirmation is sent to email" });
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: "Internal server error" });
@@ -36,10 +35,35 @@ const sendVerificationEmail = async (to, verificationCode) => {
     });
 
     await transporter.sendMail({
-        from: process.env.USER,
+        // from: process.env.USER,
+        from: '"Paris Nails Spa" <no-reply@parisnails.com>',
         to,
         subject: 'Email Verification',
         text: `Your verification code is: ${verificationCode}`
+    });
+};
+
+const confirmation = async (to, name, date, time, verificationCode) => {
+    const transporter = nodemailer.createTransport({
+        service:'gmail',
+        auth: {
+            user:process.env.USER,
+            pass:process.env.PASS
+        }
+    });
+
+    await transporter.sendMail({
+        from:"Paris Nails Spa",
+        to,
+        subject:'Reservation confirmation',
+        html:
+        `<form> 
+            <div> Your reservation is here </div>
+            <div> <strong>Name</strong>: ${name}</div>
+            <div> <strong>Date</strong>: ${date}</div>
+            <div> <strong>Time</strong>: ${time}</div>
+        </form>`
+
     });
 };
 
@@ -60,6 +84,9 @@ router.post("/verify-email", async (req, res) => {
 
         await newReservation.save();
 
+        // Send confirmation email after successful verification
+        await confirmation(email, name, date, time, code);
+
         // Remove the pending reservation from memory after successful verification
         delete pendingVerify[email];
 
@@ -70,7 +97,6 @@ router.post("/verify-email", async (req, res) => {
         res.status(400).send({ message: "Invalid verification code, reservation discarded" });
     }
 });
-
 
 // Show info
 router.get("/", async (req, res) => {

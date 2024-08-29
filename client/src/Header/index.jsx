@@ -1,14 +1,29 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import './styles.css';
+import nailsBG from '../img/nails-bg.jpg';
+import nailsPainting from '../img/painting.jpg';
 
-const Header = () => {
+const Header = ({ bookingSectionRef }) => {
+    const scrollToBookingSection = () => {
+        if (bookingSectionRef.current) {
+            bookingSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
     return (
         <div className='header'>
             <div className="name">
                 Paris Nails & Hair Salon
             </div>
+            <div className='intro-bg'>
+                <img id='intro-bg-src'src={nailsBG} alt='Intro background'/>
+                <p className="intro-sentence">
+                    PARIS NAILS SPA
+                    <p>Professional Nails Care for Ladies and Gentlement</p>
+                </p>
+                <button className='book-now'onClick={scrollToBookingSection}>BOOK NOW</button>
+            </div>
             <div className="intro">
-                <img src='https://media.allure.com/photos/5ec4434bd39c8a00089c20cb/16:9/w_1920,c_limit/painting%20nails.jpg' 
+                <img src={nailsPainting} 
                     alt='Nails Sample' id='sample-1'/>
                 <ul className="main">
                     <li><strong>Full-Range Nail Techniques:</strong> Choose from regular polish, gel, acrylic, or dip powder for a flawless finish every time.</li>

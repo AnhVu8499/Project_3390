@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
+import LogoFB from '../img/Facebook_Logo_2023.png';
+import LogoInsta from '../img/Logo-instagram.png';
 
-const ServiceList = () => {
-    const times = [];
+const ServiceList = ({ bookingSectionRef }) => {
+    const times = [];   
     /* Data models */
     const [formData, setFormData] = useState({
         name: '',
@@ -104,7 +106,7 @@ const ServiceList = () => {
     
     const handleVerfication = async () => {
         try {
-            const res = await fetch('http://localhost:3001/storage/verify-code', {
+            const res = await fetch('http://localhost:3001/storage/verify-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -136,7 +138,7 @@ const ServiceList = () => {
     }, []);
 
     return (
-        <div className='serviceList'>
+        <div className='serviceList' ref={bookingSectionRef}>
             <h1 id="title-book">Book Your Appointment Now</h1>
             <div className='container'>
                 <form className='box' onSubmit={handleSubmit}>                
@@ -218,13 +220,13 @@ const ServiceList = () => {
             <div className='social'>
                 <div className="fb">
                     <a href='https://www.facebook.com/profile.php?id=61563459404860' target='_blank' rel='noopener noreferrer'>
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png'
+                        <img src={LogoFB}
                         alt='Facebook logo'/>
                     </a>
                 </div>
                 <div className="insta">
                     <a href='https://www.instagram.com/paris_nailsbeauty68/' target='_blank' rel='noopener noreferrer'>
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/9/9a/Logo-instagram-1.png' 
+                        <img src={LogoInsta}
                         alt='Insta Logo'/>
                     </a>
                 </div>

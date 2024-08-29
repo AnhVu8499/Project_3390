@@ -12,7 +12,8 @@
 }
 
 body {
-    background: linear-gradient(to bottom, pink, purple);    
+    background-color: rgb(97, 167, 202);
+    /* background: linear-gradient(to bottom, pink, purple);     */
 }
 
 .serviceList {
@@ -46,7 +47,7 @@ input, select {
     border-radius: 4px;
 }
 
-button {
+.bookapp {
     padding:10px;
     border:none;
     border-radius: 50px;
@@ -56,7 +57,7 @@ button {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-button:hover {
+.bookapp:hover {
     background-color: #7a9cc7;
     transform: scale(1.05);
 }
