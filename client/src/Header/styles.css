@@ -12,6 +12,8 @@
 }
 
 .name {
+    display: flex;
+    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
@@ -24,6 +26,11 @@
     z-index: 1000;
     padding: 10px; /* Added padding for visual space inside .name */
     box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+.opening {
+    font-size:0.5em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .intro {

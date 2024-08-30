@@ -93,14 +93,14 @@ const ServiceList = ({ bookingSectionRef }) => {
             });
 
             if (res.ok) {
-                alert('Please check your email for verified code');
+                alert('Kérjük, ellenőrizze az emailjeit a megerősítő kódért.');
                 setShowverfied(true);
             } else {
-                alert('Failed to reserve');
+                alert('Foglalás sikertelen.');
             }
         } catch (err) {
-            console.error('Error submitting', err);
-            alert('Network error');
+            console.error('Hiba a beküldés során.', err);
+            alert('Hálózati hiba.');
         }
     }
     
@@ -115,7 +115,7 @@ const ServiceList = ({ bookingSectionRef }) => {
             });
 
             if (res.ok) {
-                alert('Verified email successfully');
+                alert('Email sikeresen ellenőrizve.');
                 // Clear form
                 setFormData({
                     name: '',
@@ -125,11 +125,11 @@ const ServiceList = ({ bookingSectionRef }) => {
                 });
                 setShowverfied(false);
             } else {
-                alert('Invalid code');
+                alert('Érvénytelen kód.');
             }
         } catch (error) {
             console.error(error);
-            alert('Network error');
+            alert('Hálózati hiba.');
         }
     }
 
@@ -139,13 +139,13 @@ const ServiceList = ({ bookingSectionRef }) => {
 
     return (
         <div className='serviceList' ref={bookingSectionRef}>
-            <h1 id="title-book">Book Your Appointment Now</h1>
+            <h1 id="title-book">Foglaljon időpontot most</h1>
             <div className='container'>
                 <form className='box' onSubmit={handleSubmit}>                
                     <input
                         id="name"
                         type="text"
-                        placeholder="Your name"
+                        placeholder="Az ön neve"
                         value={formData.name}
                         onChange={handleChange}
                         required
@@ -153,7 +153,7 @@ const ServiceList = ({ bookingSectionRef }) => {
                     <input
                         id="email"
                         type="text"
-                        placeholder="Your email address"
+                        placeholder="Az ön email címe"
                         value={formData.email} 
                         onChange={handleChange}
                         required
@@ -167,7 +167,7 @@ const ServiceList = ({ bookingSectionRef }) => {
                         onChange={handleChange}
                     />
                     <select id="time" required value={formData.time} onChange={handleChange}>
-                        <option value="">Select time</option>
+                        <option value="">Időpont kiválasztása</option>
                         {times.map((time) => (
                             <option key={time} value={time}>
                                 {time}
@@ -175,17 +175,17 @@ const ServiceList = ({ bookingSectionRef }) => {
                         ))}
                     </select>
                     {/* Submit button below */}
-                    <button type='submit' className='bookapp'>Book Your Appointment</button>
+                    <button type='submit' className='bookapp'>Foglaljon Időpontot Most</button>
                     {/* <button onClick={handleShow}>Show All Appointment</button> */}
                 </form>
             </div>
             
             {/* Verification Input */}
             {showVerified && (
-                <div>
-                    <h2>Enter Verification Code</h2>
-                    <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} placeholder="Verification code" required />
-                    <button onClick={handleVerfication}>Verify Code</button>
+                <div className='verify-code-box'>
+                    <h2>Adja meg a megerősítő kódot.</h2>
+                    <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} placeholder="Megerősítő kód." required />
+                    <button onClick={handleVerfication}>Kód ellenőrzése.</button>
                 </div>
             )}
 

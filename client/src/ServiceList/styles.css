@@ -81,3 +81,33 @@ input, select {
     height: auto;
     cursor: pointer;
 }
+
+.verify-code-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   
+    width: 300px;
+    margin: 0 auto;  /* Centers the box horizontally if it's in a block-level container */
+}
+
+.verify-code-box input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.verify-code-box button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #92b1d3;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.verify-code-box button:hover {
+    background-color: #7a9cc7;
+    transform: scale(1.05);
+}

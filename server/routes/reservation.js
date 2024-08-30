@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 
 // Temporary in-memory storage for verification codes
 const pendingVerify = {};
+const MAX_ATTEMPTS = 3;
 
 // Add reservation and send verification code
 router.post("/", async (req, res) => {
@@ -12,7 +13,7 @@ router.post("/", async (req, res) => {
         const { name, email, date, time } = req.body;
 
         // Store pending verification data
-        pendingVerify[email] = { name, email, date, time, verificationCode };
+        pendingVerify[email] = { name, email, date, time, verificationCode, retryCount:0 };
 
         // Send verification code via email
         await sendVerificationEmail(email, verificationCode);
@@ -43,7 +44,7 @@ const sendVerificationEmail = async (to, verificationCode) => {
     });
 };
 
-const confirmation = async (to, name, date, time, verificationCode) => {
+const confirmation = async (to, name, date, time) => {
     const transporter = nodemailer.createTransport({
         service:'gmail',
         auth: {
@@ -92,9 +93,15 @@ router.post("/verify-email", async (req, res) => {
 
         res.status(200).send({ message: "Email verified and reservation saved successfully" });
     } else {
-        // If the code is incorrect, discard the pending reservation
-        delete pendingVerify[email];
-        res.status(400).send({ message: "Invalid verification code, reservation discarded" });
+        pendingReservation.retryCount = (pendingReservation.retryCount || 0) + 1;
+
+        if (pendingReservation.retryCount >= MAX_ATTEMPTS) {
+            // If maximum attempts reached, discard the reservation
+            delete pendingVerify[email];
+            res.status(400).send({ message: "Invalid verification code, reservation discarded after multiple attempts" });
+        } else {
+            res.status(400).send({ message: `Invalid verification code. You have ${MAX_ATTEMPTS - pendingReservation.retryCount} attempts left.` });
+        }
     }
 });
 
