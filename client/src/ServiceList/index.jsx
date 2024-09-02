@@ -176,7 +176,6 @@ const ServiceList = ({ bookingSectionRef }) => {
                     </select>
                     {/* Submit button below */}
                     <button type='submit' className='bookapp'>Foglaljon Időpontot Most</button>
-                    {/* <button onClick={handleShow}>Show All Appointment</button> */}
                 </form>
             </div>
             
@@ -189,9 +188,9 @@ const ServiceList = ({ bookingSectionRef }) => {
                 </div>
             )}
 
-            {/* Fetch data from db */}
+            {/* Fetch data from db
             <div className='reservations'>
-                {data.length > 0 ? (
+                {data.length > 0 && (
                     <ul>
                         {data.map((item, index) => (
                             <li key={index}>
@@ -200,10 +199,9 @@ const ServiceList = ({ bookingSectionRef }) => {
                             </li>
                         ))}
                     </ul>
-                ) : (
-                    <p id="not-found">No reservations found</p>
                 )}
-            </div>
+            </div> */}
+
             {/* Google map embedded */}
             <div className='map'>
                 <iframe 
