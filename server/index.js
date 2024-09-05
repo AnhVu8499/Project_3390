@@ -2,11 +2,10 @@ require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 const connection = require('./db');
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
 const cors = require('cors');
 const serviceRoutes = require("./routes/service");
 const reservationRoutes = require("./routes/reservation");
+const path = require('path');
 
 const app = express();
 
@@ -21,6 +20,14 @@ app.use(cors({
 
 app.use("/storage", reservationRoutes);
 app.use("/main", serviceRoutes);
+
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, '../client/public')));
+
+// Route to serve the admin.html file
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/public/admin.html'));
+});
 
 app.get('/api', (req, res) => {
     res.send('Hello from Express!');

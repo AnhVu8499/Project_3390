@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';  // Import the CSS file for styling
+import ReactDOM from 'react-dom';
+import './styles.css';  
 
-const AdminDashboard = () => {
+const Admin = (bookingSectionRef) => {
     const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
@@ -57,4 +58,4 @@ const AdminDashboard = () => {
     );
 };
 
-export default AdminDashboard;
+export default Admin;

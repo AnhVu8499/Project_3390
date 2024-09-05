@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
-import LogoFB from '../img/Facebook_Logo_2023.png';
-import LogoInsta from '../img/Logo-instagram.png';
 
-const ServiceList = ({ bookingSectionRef }) => {
-    const times = [];   
+const ServiceList = () => {
+    const times = [];
     /* Data models */
     const [formData, setFormData] = useState({
         name: '',
@@ -93,14 +91,14 @@ const ServiceList = ({ bookingSectionRef }) => {
             });
 
             if (res.ok) {
-                alert('Kérjük, ellenőrizze az emailjeit a megerősítő kódért.');
+                alert('Please check your email for verified code');
                 setShowverfied(true);
             } else {
-                alert('Foglalás sikertelen.');
+                alert('Failed to reserve');
             }
         } catch (err) {
-            console.error('Hiba a beküldés során.', err);
-            alert('Hálózati hiba.');
+            console.error('Error submitting', err);
+            alert('Network error');
         }
     }
     
@@ -115,7 +113,7 @@ const ServiceList = ({ bookingSectionRef }) => {
             });
 
             if (res.ok) {
-                alert('Email sikeresen ellenőrizve.');
+                alert('Verified email successfully');
                 // Clear form
                 setFormData({
                     name: '',
@@ -125,11 +123,11 @@ const ServiceList = ({ bookingSectionRef }) => {
                 });
                 setShowverfied(false);
             } else {
-                alert('Érvénytelen kód.');
+                alert('Invalid code');
             }
         } catch (error) {
             console.error(error);
-            alert('Hálózati hiba.');
+            alert('Network error');
         }
     }
 
@@ -138,14 +136,14 @@ const ServiceList = ({ bookingSectionRef }) => {
     }, []);
 
     return (
-        <div className='serviceList' ref={bookingSectionRef}>
-            <h1 id="title-book">Foglaljon időpontot most</h1>
+        <div className='serviceList'>
+            <h1 id="title-book">Book Your Appointment Now</h1>
             <div className='container'>
                 <form className='box' onSubmit={handleSubmit}>                
                     <input
                         id="name"
                         type="text"
-                        placeholder="Az ön neve"
+                        placeholder="Your name"
                         value={formData.name}
                         onChange={handleChange}
                         required
@@ -153,7 +151,7 @@ const ServiceList = ({ bookingSectionRef }) => {
                     <input
                         id="email"
                         type="text"
-                        placeholder="Az ön email címe"
+                        placeholder="Your email address"
                         value={formData.email} 
                         onChange={handleChange}
                         required
@@ -167,7 +165,7 @@ const ServiceList = ({ bookingSectionRef }) => {
                         onChange={handleChange}
                     />
                     <select id="time" required value={formData.time} onChange={handleChange}>
-                        <option value="">Időpont kiválasztása</option>
+                        <option value="">Select time</option>
                         {times.map((time) => (
                             <option key={time} value={time}>
                                 {time}
@@ -175,17 +173,17 @@ const ServiceList = ({ bookingSectionRef }) => {
                         ))}
                     </select>
                     {/* Submit button below */}
-                    <button type='submit' className='bookapp'>Foglaljon Időpontot Most</button>
+                    <button type='submit' className='bookapp'>Book Your Appointment</button>
                     {/* <button onClick={handleShow}>Show All Appointment</button> */}
                 </form>
             </div>
             
             {/* Verification Input */}
             {showVerified && (
-                <div className='verify-code-box'>
-                    <h2>Adja meg a megerősítő kódot.</h2>
-                    <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} placeholder="Megerősítő kód." required />
-                    <button onClick={handleVerfication}>Kód ellenőrzése.</button>
+                <div>
+                    <h2>Enter Verification Code</h2>
+                    <input type="text" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} placeholder="Verification code" required />
+                    <button onClick={handleVerfication}>Verify Code</button>
                 </div>
             )}
 
@@ -220,13 +218,13 @@ const ServiceList = ({ bookingSectionRef }) => {
             <div className='social'>
                 <div className="fb">
                     <a href='https://www.facebook.com/profile.php?id=61563459404860' target='_blank' rel='noopener noreferrer'>
-                        <img src={LogoFB}
+                        <img src='https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png'
                         alt='Facebook logo'/>
                     </a>
                 </div>
                 <div className="insta">
                     <a href='https://www.instagram.com/paris_nailsbeauty68/' target='_blank' rel='noopener noreferrer'>
-                        <img src={LogoInsta}
+                        <img src='https://upload.wikimedia.org/wikipedia/commons/9/9a/Logo-instagram-1.png' 
                         alt='Insta Logo'/>
                     </a>
                 </div>
