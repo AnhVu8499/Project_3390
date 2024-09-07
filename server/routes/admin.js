@@ -3,14 +3,20 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const router = express.Router();
 
-// Endpoint to send admin verification code
+// Temporary in-memory storage for verification codes
+const pendingVerify = {};
+const MAX_ATTEMPTS = 3;
+
+//  Sending admin verification code
 router.post('/send-admin-verification', async (req, res) => {
     try {
-        // Generate a random verification code
-        const verificationCode = crypto.randomBytes(3).toString('hex'); // 6-character code
-        const ownerEmail = process.env.USER; // Set your owner's email in the .env file
+        // Generate a random 6-character verification code (hex)
+        const verificationCode = crypto.randomBytes(3).toString('hex');
+        const ownerEmail = process.env.USER;
 
-        // Configure your email transport
+        pendingVerify[ownerEmail] = { verificationCode, retryCount: 0 };
+
+        // Configure email transport
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -19,7 +25,8 @@ router.post('/send-admin-verification', async (req, res) => {
             },
         });
 
-        // Send the email
+        // Send verification code to owner
+        // To open admin dashboard
         await transporter.sendMail({
             from: '"Paris Nails Spa" <no-reply@parisnails.com>',
             to: ownerEmail,
@@ -27,33 +34,39 @@ router.post('/send-admin-verification', async (req, res) => {
             text: `Your admin access verification code is: ${verificationCode}`,
         });
 
-        // Store the verification code in the session
-        if (!req.session.adminVerificationCodes) {
-            req.session.adminVerificationCodes = {};
-        }
-        req.session.adminVerificationCodes[ownerEmail] = verificationCode;
-
         res.status(200).send({ message: 'Verification code sent to owner\'s email' });
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).send({ message: 'Failed to send verification code' });
+        res.status(500).send({ message: 'Failed to send verification code. Please try again later.' });
     }
 });
 
-// Endpoint to verify the admin code
+// verify the admin code
 router.post('/verify-admin-code', (req, res) => {
-    const { email, code } = req.body;
+    const { code } = req.body;
+    const ownerEmail = process.env.USER;
 
-    // Check if the provided email has a pending verification code
-    if (!req.session.adminVerificationCodes || req.session.adminVerificationCodes[email] !== code) {
-        return res.status(400).send({ message: 'Invalid verification code' });
+    // Retrieve pending verification data
+    const pendingData = pendingVerify[ownerEmail];
+
+    if (!pendingData) {
+        return res.status(404).send({ message: 'No pending verification code found' });
     }
 
-    // Clear the verification code after successful verification
-    delete req.session.adminVerificationCodes[email];
+    // Check if the provided code matches the stored code
+    if (pendingData.verificationCode !== code) {
+        pendingData.retryCount = (pendingData.retryCount || 0) + 1;
+
+        if (pendingData.retryCount >= MAX_ATTEMPTS) {
+            delete pendingVerify[ownerEmail];
+            return res.status(400).send({ message: 'Invalid verification code. Verification code has been discarded after multiple attempts.' });
+        } else {
+            return res.status(400).send({ message: `Invalid verification code. You have ${MAX_ATTEMPTS - pendingData.retryCount} attempts left.` });
+        }
+    }
+    delete pendingVerify[ownerEmail];
 
     res.status(200).send({ message: 'Verification code is valid' });
 });
-
 
 module.exports = router;

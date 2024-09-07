@@ -4,10 +4,8 @@ const { Service } = require('../models/service');
 router.post("/", async (req, res) => {
     try {
         console.log("Incoming request body:", req.body);
-        const { service, price } = req.body
-        console.log("Received service:", service);
-        console.log("Received price:", price); 
-        const newService = new Service({ service, price })
+        const { service, price, serviceType } = req.body
+        const newService = new Service({ service, price, serviceType })
         await newService.save()
         
         res.status(201).send({ message: "Service created successfully", service: newService });
@@ -26,5 +24,6 @@ router.get("/", async (req, res) => {
         res.status(500).send({ message: "Internal server error" });
     }
 });
+
 
 module.exports = router

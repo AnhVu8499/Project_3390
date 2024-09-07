@@ -6,7 +6,7 @@ const app = express()
 app.use(express.json())
 
 const serviceSchema = new mongoose.Schema({
-    service: {
+    subService: {
         type: String,
         required: true
     },
@@ -14,6 +14,10 @@ const serviceSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    serviceType: {
+        type: String,
+        required: true
+    }
 })
 
 const Service = mongoose.model("service", serviceSchema)

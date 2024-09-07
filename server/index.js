@@ -8,18 +8,13 @@ const crypto = require('crypto');
 const cors = require('cors');
 const serviceRoutes = require("./routes/service");
 const reservationRoutes = require("./routes/reservation");
-const adminRoutes = require('./routes/admin'); // Assuming you put the route in authRoutes.js
+const adminRoutes = require('./routes/admin');
+const { Service } = require('./models/service');
 
 const app = express();
 
 connection();
 app.use(express.json());
-
-app.use(session({
-    secret: process.env.KEY, // Change this to a secure random string
-    resave: false,
-    saveUninitialized: true,
-}));
 
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -31,9 +26,14 @@ app.use("/storage", reservationRoutes);
 app.use("/main", serviceRoutes);
 app.use('/admin', adminRoutes);
 
-app.get('/api', (req, res) => {
-    res.send('Hello from Express!');
-});
+app.get('/services', async (req, res) => {
+    try {
+      const services = await Service.find(); // Fetch all services from the DB
+      res.json(services);
+    } catch (error) {
+      res.status(500).send('Server Error');
+    }
+  });
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

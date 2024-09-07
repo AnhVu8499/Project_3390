@@ -1,28 +1,39 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
-import InputService from './InputService';
 import ServiceList from './ServiceList';
 import Header from './Header';
-import Admin from './Admin';
-import Verification from './Verification';
 
 const App = () => {
   const [showAdmin, setShowAdmin] = useState(false);
-  const [showVerification, setShowVerification] = useState(true); // Initially show verification form
+  const [showVerification, setShowVerification] = useState(false);
+  const bookingSectionRef = useRef(null);
 
-  const handleAdminButtonClick = () => {
-    setShowVerification(true); // Show verification form
+  const handleVerified = () => {
+    setShowVerification(false);
+    setShowAdmin(true);
+  };
+
+  const handleGoBack = () => {
+    setShowVerification(false);
+    setShowAdmin(false);
   };
 
   return (
-    <div>
-      <Header />
-      <ServiceList />
-      <button onClick={handleAdminButtonClick}>
-        {showAdmin ? 'Hide Admin' : 'Show Admin'}
-      </button>
-      {showVerification ? <Verification onVerified={() => setShowAdmin(true)} /> : null}
-      {showAdmin && !showVerification && <Admin />}
+    <div> 
+      {/* <Header bookingSectionRef={bookingSectionRef} />
+      <ServiceList bookingSectionRef={bookingSectionRef} /> */}
+      {!showAdmin && !showVerification && (
+        <Header bookingSectionRef={bookingSectionRef} />
+      )}
+
+      <ServiceList
+        bookingSectionRef={bookingSectionRef}
+        showAdmin={showAdmin}
+        showVerification={showVerification}
+        setShowVerification={setShowVerification}
+        handleVerified={handleVerified}
+        handleGoBack={handleGoBack}
+      />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import './styles.css';
 const InputService = () => {
     const [service, setService] = useState('');
     const [price, setPrice] = useState('');
+    const [serviceType, setServiceType] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -11,10 +12,11 @@ const InputService = () => {
         const newService = {
             service: service.trim(),
             price: parseFloat(price),
+            serviceType: serviceType.trim()
         };
 
         try {
-            const response = await fetch('https://salonbe-mcw5.onrender.com/main', { 
+            const response = await fetch('http://localhost:3001/main', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,6 +28,7 @@ const InputService = () => {
                 alert('Service added successfully');
                 setService('');
                 setPrice('');
+                setServiceType('');
             } else {
                 const errorData = await response.json();
                 alert(`Failed to add service: ${errorData.message}`);
@@ -50,6 +53,13 @@ const InputService = () => {
                 value={price} 
                 onChange={(e) => setPrice(e.target.value)} 
                 placeholder="Price" 
+                required 
+            />
+            <input 
+                type="text" 
+                value={serviceType} 
+                onChange={(e) => setServiceType(e.target.value)} 
+                placeholder="Service Type" 
                 required 
             />
             <button type="submit">Add Service</button>

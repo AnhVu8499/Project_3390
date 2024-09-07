@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css'; 
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ handleGoBack }) => {
     const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
@@ -53,6 +53,7 @@ const AdminDashboard = () => {
                     )}
                 </tbody>
             </table>
+            <button onClick={ handleGoBack }>Go Back</button>
         </div>
     );
 };
