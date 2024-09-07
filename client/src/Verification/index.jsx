@@ -10,7 +10,8 @@ const Verification = ({ onVerified, handleGoBack }) => {
   // Function to request the verification code via email
   const sendVerificationCode = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/admin/send-admin-verification');
+      //const response = await axios.post('http://localhost:3001/admin/send-admin-verification');
+      const response = await axios.post('https://salonbe-mcw5.onrender.com/admin/send-admin-verification');
       if (response.status === 200) {
         setMessage('Verification code sent to your email');
       }
@@ -30,7 +31,8 @@ const Verification = ({ onVerified, handleGoBack }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/admin/verify-admin-code', { code });
+      //const response = await axios.post('http://localhost:3001/admin/verify-admin-code', { code });
+      const response = await axios.post('https://salonbe-mcw5.onrender.com/admin/verify-admin-code', { code });
       if (response.status === 200) {
         onVerified();
       }
