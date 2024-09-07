@@ -16,7 +16,8 @@ const InputService = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3001/main', { 
+            //const response = await fetch('http://localhost:3001/main', { 
+            const response = await fetch('https://salonbe-mcw5.onrender.com/main', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
