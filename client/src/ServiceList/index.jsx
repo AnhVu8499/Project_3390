@@ -38,7 +38,8 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
 
     const handleShow = async () => {
         try {
-            const res = await fetch('http://localhost:3001/storage', {
+            //const res = await fetch('http://localhost:3001/storage', {
+            const res = await fetch('https://salonbe-mcw5.onrender.com/storage', {
                 method:'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +76,8 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:3001/storage', {
+            //const res = await fetch('http://localhost:3001/storage', {
+            const res = await fetch('https://salonbe-mcw5.onrender.com/storage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -97,7 +99,8 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
     
     const handleVerfication = async () => {
         try {
-            const res = await fetch('http://localhost:3001/storage/verify-email', {
+            //const res = await fetch('http://localhost:3001/storage/verify-email', {
+            const res = await fetch('https://salonbe-mcw5.onrender.com/storage/verify-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -134,7 +137,8 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
         if (bookingSectionRef.current) {
             console.log('Booking section ref is ready:', bookingSectionRef.current);
         }
-        axios.get('http://localhost:3001/services')
+        //axios.get('http://localhost:3001/services')
+        axios.get('https://salonbe-mcw5.onrender.com/services')
             .then(response => {
                 setServices(response.data);
                 const types = response.data.map(service => service.serviceType);
