@@ -119,12 +119,6 @@ input, select {
     font-size: 1.2em; 
 }
 
-/* #menu-container {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-} */
-
 /* Responsive design for tablets */
 @media screen and (max-width: 768px) {
     .menu {
