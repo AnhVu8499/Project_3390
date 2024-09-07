@@ -87,6 +87,7 @@ input, select {
     cursor: pointer;
     object-fit: cover;
 }
+
 .menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
@@ -118,23 +119,37 @@ input, select {
     font-size: 1.2em; 
 }
 
-#menu-container {
+/* #menu-container {
     display: flex; 
     justify-content: space-between; 
     align-items: center;
-}
+} */
 
+/* Responsive design for tablets */
 @media screen and (max-width: 768px) {
-    .menu-container {
-        grid-template-columns: repeat(2, 1fr); 
+    .menu {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
     }
 }
 
-    /* Adjust the layout for mobile devices */
+/* Responsive design for mobile phones */
 @media screen and (max-width: 480px) {
-    .menu-container {
-        grid-template-columns: 1fr; 
+    .menu {
+        grid-template-columns: 1fr; /* 1 column for mobile */
     }
+}
+
+/* Additional styling for text inside the menu items */
+#menu-service {
+    margin-right: 20px; 
+    font-size: 1em; 
+    color: #333;
+}
+
+#menu-price {
+    font-size: 1em; 
+    color: #333;
+    font-weight: bold; 
 }
 
 #menu-service {
@@ -148,7 +163,6 @@ input, select {
     color: #333;
     font-weight: bold; 
 }
-
 
 .verify-code-box {
     display: flex;
