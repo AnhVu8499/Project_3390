@@ -124,8 +124,21 @@ input, select {
     align-items: center;
 }
 
+@media screen and (max-width: 768px) {
+    .menu-container {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+    /* Adjust the layout for mobile devices */
+@media screen and (max-width: 480px) {
+    .menu-container {
+        grid-template-columns: 1fr; 
+    }
+}
+
 #menu-service {
-    margin-right: 20px; /* Space between service and price */
+    margin-right: 20px; 
     font-size: 1em; 
     color: #333;
 }
@@ -133,7 +146,7 @@ input, select {
 #menu-price {
     font-size: 1em; 
     color: #333;
-    font-weight: bold; /* Bold text for price */
+    font-weight: bold; 
 }
 
 
