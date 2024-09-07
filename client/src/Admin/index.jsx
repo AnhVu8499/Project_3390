@@ -8,7 +8,8 @@ const AdminDashboard = ({ handleGoBack }) => {
         // Fetch reservations from the API when the component mounts
         const fetchReservations = async () => {
             try {
-                const response = await fetch('http://localhost:3001/storage');
+                //const response = await fetch('http://localhost:3001/storage');
+                const response = await fetch('https://salonbe-mcw5.onrender.com/storage');
                 if (!response.ok) {
                     throw new Error('Failed to fetch reservations');
                 }
