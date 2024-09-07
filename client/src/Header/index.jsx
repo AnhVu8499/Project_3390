@@ -14,14 +14,14 @@ const Header = ({ bookingSectionRef }) => {
             <div className="name">
                 <p>Paris Nails & Hair Salon</p>
                 <div className="opening">
-                    <div className="business-day">Monday - Sunday</div>
+                    <div className="business-day">Hétfő - Vasárnap</div>
                     <div className="business-hours">9AM - 8PM</div>
                 </div>
             </div>
             <div className='intro-bg'>
                 <img id='intro-bg-src'src={nailsBG} alt='Intro background'/>
                 <p className="intro-sentence">
-                    PARIS NAILS SPA
+                    PARIS NAILS SZALON
                     <p>Professzionális körömápolás hölgyeknek és uraknak</p>
                 </p>
                 <button className='book-now'onClick={scrollToBookingSection}>FOGLALJON MOST</button>
