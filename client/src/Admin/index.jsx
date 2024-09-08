@@ -44,7 +44,7 @@ const AdminDashboard = ({ handleGoBack }) => {
                                 <td>{reservation.email}</td>
                                 <td>{new Date(reservation.date).toLocaleDateString()}</td>
                                 <td>{reservation.time}</td>
-                                <td></td>
+                                <td>{reservation.service}</td>
                                 {/* <td>{reservation.verified ? 'Verified' : 'Pending'}</td> */}
                             </tr>
                         ))
