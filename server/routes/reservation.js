@@ -55,7 +55,7 @@ const confirmation = async (to, name, date, time) => {
     });
 
     await transporter.sendMail({
-        from:"Paris Nails Spa",
+        from:'"Paris Nails Spa" <no-reply@parisnails.com>',
         to,
         subject:'Foglalás megerősítése',
         html:
