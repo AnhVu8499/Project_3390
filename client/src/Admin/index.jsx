@@ -58,7 +58,7 @@ const AdminDashboard = ({ handleGoBack }) => {
                         <th>Date</th>
                         <th>Time</th>
                         <th>Service Type</th>
-                        <th>Sub Service</th>
+                        <th>Service</th>
                     </tr>
                 </thead>
                 <tbody>
