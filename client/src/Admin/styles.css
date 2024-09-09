@@ -75,10 +75,4 @@ td[colspan="5"] {
         overflow-x: auto;
         width: 100%;
     }
-
-
-    th:nth-child(4), td:nth-child(4), 
-    th:nth-child(5), td:nth-child(5)  {
-        display: none;
-    }
 }
