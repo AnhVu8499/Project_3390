@@ -57,6 +57,9 @@ const AdminDashboard = ({ handleGoBack }) => {
                                 <td>{new Date(reservation.date).toLocaleDateString()}</td>
                                 <td>{reservation.time}</td>
                                 <td>{reservation.service}</td>
+                                <td>
+                                    <button onClick={() => handleDelete(reservation._id)}>Delete</button>
+                                </td>
                                 {/* <td>{reservation.verified ? 'Verified' : 'Pending'}</td> */}
                             </tr>
                         ))
@@ -67,8 +70,8 @@ const AdminDashboard = ({ handleGoBack }) => {
                     )}
                 </tbody>
             </table>
-            <button onClick={deletedReservation}>Delete Past Reservations</button>
             <button onClick={ handleGoBack }>Go Back</button>
+            <button onClick={deletedReservation}>Delete Past Reservations</button>
         </div>
     );
 };
