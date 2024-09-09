@@ -10,10 +10,10 @@ const MAX_ATTEMPTS = 3;
 router.post("/", async (req, res) => {
     try {
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit code
-        const { name, email, date, time, service } = req.body;
+        const { name, email, date, time } = req.body;
 
         // Store pending verification data
-        pendingVerify[email] = { name, email, date, time, service, verificationCode, retryCount:0 };
+        pendingVerify[email] = { name, email, date, time, verificationCode, retryCount:0 };
 
         // Send verification code via email
         await sendVerificationEmail(email, verificationCode);
@@ -44,7 +44,7 @@ const sendVerificationEmail = async (to, verificationCode) => {
     });
 };
 
-const confirmation = async (to, name, date, time, service) => {
+const confirmation = async (to, name, date, time) => {
     const transporter = nodemailer.createTransport({
         service:'gmail',
         auth: {
@@ -63,7 +63,6 @@ const confirmation = async (to, name, date, time, service) => {
             <div> <strong>Name</strong>: ${name}</div>
             <div> <strong>Date</strong>: ${date}</div>
             <div> <strong>Time</strong>: ${time}</div>
-            <div> <strong>Service</strong>: ${service}</div>
         </form>`
 
     });
@@ -81,13 +80,13 @@ router.post("/verify-email", async (req, res) => {
 
     if (pendingReservation.verificationCode === code) {
         // Save reservation to the database if the code is correct
-        const { name, date, time, service } = pendingReservation;
-        const newReservation = new Reservation({ name, email, date: new Date(date), time, service, verified: true });
+        const { name, date, time } = pendingReservation;
+        const newReservation = new Reservation({ name, email, date: new Date(date), time, verified: true });
 
         await newReservation.save();
 
         // Send confirmation email after successful verification
-        await confirmation(email, name, date, time, service, code);
+        await confirmation(email, name, date, time, code);
 
         // Remove the pending reservation from memory after successful verification
         delete pendingVerify[email];
