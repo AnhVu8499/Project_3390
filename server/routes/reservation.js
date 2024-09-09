@@ -10,10 +10,10 @@ const MAX_ATTEMPTS = 3;
 router.post("/", async (req, res) => {
     try {
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-        const { name, email, date, time, service } = req.body;  // Include service
+        const { name, email, date, time, serviceType, subService } = req.body;  // Include service
 
         // Store pending verification data
-        pendingVerify[email] = { name, email, date, time, service, verificationCode, retryCount:0 };
+        pendingVerify[email] = { name, email, date, time, serviceType, subService, verificationCode, retryCount:0 };
 
         // Send verification code via email
         await sendVerificationEmail(email, verificationCode);
@@ -57,14 +57,15 @@ const confirmation = async (to, name, date, time) => {
     await transporter.sendMail({
         from:"Paris Nails Spa",
         to,
-        subject:'Reservation confirmation',
+        subject:'Foglalás megerősítése',
         html:
         `<form> 
-            <div> Your reservation is here </div>
-            <div> <strong>Name</strong>: ${name}</div>
-            <div> <strong>Date</strong>: ${date}</div>
-            <div> <strong>Time</strong>: ${time}</div>
-        </form>`
+            <div> Az Ön foglalása itt található </div>
+            <div> <strong>Név</strong>: ${name}</div>
+            <div> <strong>Dátum</strong>: ${date}</div>
+            <div> <strong>Időpont</strong>: ${time}</div>
+        </form>
+`
 
     });
 };
@@ -80,8 +81,8 @@ router.post("/verify-email", async (req, res) => {
     }
 
     if (pendingReservation.verificationCode === code) {
-        const { name, date, time, service } = pendingReservation;
-        const newReservation = new Reservation({ name, email, date: new Date(date), time, service, verified: true });
+        const { name, date, time, serviceType, subService } = pendingReservation;
+        const newReservation = new Reservation({ name, email, date: new Date(date), time, serviceType, subService, verified: true });
     
         await newReservation.save();
     
