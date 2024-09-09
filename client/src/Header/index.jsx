@@ -21,8 +21,8 @@ const Header = ({ bookingSectionRef }) => {
             <div className='intro-bg'>
                 <img id='intro-bg-src'src={nailsBG} alt='Intro background'/>
                 <p className="intro-sentence">
-                    PARIS NAILS SZALON
-                    <p>Professzionális körömápolás hölgyeknek és uraknak</p>
+                    {/* PARIS NAILS SZALON
+                    <p>Professzionális körömápolás hölgyeknek és uraknak</p> */}
                 </p>
                 <button className='book-now'onClick={scrollToBookingSection}>FOGLALJON MOST</button>
             </div>
