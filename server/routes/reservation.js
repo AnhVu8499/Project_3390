@@ -117,7 +117,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Delete info
+// Delete info manually
 router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -132,5 +132,20 @@ router.delete("/:id", async (req, res) => {
         res.status(500).send({ message: "Internal server error "});
     }
 });
+
+router.delete("/autoDelete", async (req, res) => {
+    try {
+        const today = new Date();
+        const result = await Reservation.deleteMany({ date: { $lt: today }});
+        if (result.deletedCount > 0) {
+            res.status(200).send({ message: `${result.deletedCount} past reservations deleted` });
+        } else {
+            res.status(404).send({ message: "No past reservations found" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+})
 
 module.exports = router;
