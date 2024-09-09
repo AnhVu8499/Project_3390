@@ -85,8 +85,8 @@ router.post("/verify-email", async (req, res) => {
 
     if (pendingReservation.verificationCode === code) {
         // Save reservation to the database if the code is correct
-        const { name, date, time } = pendingReservation;
-        const newReservation = new Reservation({ name, email, date: new Date(date), time, verified: true });
+        const { name, date, time, service } = pendingReservation;
+        const newReservation = new Reservation({ name, email, date: new Date(date), time, service, verified: true });
 
         await newReservation.save();
 

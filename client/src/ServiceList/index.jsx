@@ -118,7 +118,7 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formData.email.trim(), code: verificationCode.trim() })
+                body: JSON.stringify({ email: formData.email.trim(), code: verificationCode })
             });
 
             if (res.ok) {
@@ -126,6 +126,8 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                 setFormData({
                     name: '',
                     email: '',
+                    serviceType: '',
+                    subService: '', 
                     date: '',
                     time: ''
                 });
@@ -134,8 +136,10 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                 alert('Érvénytelen kód.');
             }
         } catch (error) {
-            console.error(error);
-            alert('Hálózati hiba.');
+            console.error('Error details:', error);
+            alert('Network error.');
+            // console.error(error);
+            // alert('Hálózati hiba.');
         }
     };
 
