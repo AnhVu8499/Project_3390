@@ -3,10 +3,11 @@ import './styles.css';
 
 const AdminDashboard = ({ handleGoBack }) => {
     const [reservations, setReservations] = useState([]);
+
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this reservation?");
         if (!confirmDelete) return;
-    
+
         try {
             const res = await fetch(`https://salonbe-mcw5.onrender.com/${id}`, {
                 method: 'DELETE',
@@ -14,24 +15,23 @@ const AdminDashboard = ({ handleGoBack }) => {
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             if (res.ok) {
                 alert("Reservation deleted successfully.");
                 setReservations(prevReservations => prevReservations.filter(reservation => reservation._id !== id));
             } else {
-                alert(`Attempting to delete reservation with ID: ${id}`);
-                alert("Failed to delete the reservation.");
+                const data = await res.json();
+                alert(`Failed to delete the reservation: ${data.message}`);
             }
         } catch (err) {
-            console.error(err);
+            console.error('Network error:', err);
             alert("Network error.");
         }
     }
+
     useEffect(() => {
-        // Fetch reservations from the API when the component mounts
         const fetchReservations = async () => {
             try {
-                //const response = await fetch('http://localhost:3001/storage');
                 const response = await fetch('https://salonbe-mcw5.onrender.com/storage');
                 if (!response.ok) {
                     throw new Error('Failed to fetch reservations');
@@ -58,6 +58,7 @@ const AdminDashboard = ({ handleGoBack }) => {
                         <th>Time</th>
                         <th>Service Type</th>
                         <th>Sub Service</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,20 +72,19 @@ const AdminDashboard = ({ handleGoBack }) => {
                                 <td>{reservation.serviceType}</td>
                                 <td>{reservation.subService}</td>
                                 <td>
-                                    {/* Add delete button */}
+                                    {/* Delete button */}
                                     <button onClick={() => handleDelete(reservation._id)}>Delete</button>
                                 </td>
-                                {/* <td>{reservation.verified ? 'Verified' : 'Pending'}</td> */}
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="5">No reservations found</td>
+                            <td colSpan="7">No reservations found</td>
                         </tr>
                     )}
                 </tbody>
             </table>
-            <button onClick={ handleGoBack }>Go Back</button>
+            <button onClick={handleGoBack}>Go Back</button>
         </div>
     );
 };
