@@ -73,18 +73,18 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
         }
     };
     
-    const deleteManually = async () => {
-        try {
-            const response = await axios.delete(`https://salonbe-mcw5.onrender.com/storage/${id}`);
-            alert(response.data.message);
-            setReservations((prevReservations) =>
-                prevReservations.filter((reservation) => reservation._id !== id)
-            );
-        } catch (error) {
-            console.error(error);
-            alert("Failed to delete this reservation");
-        }
-    }
+    // const deleteManually = async () => {
+    //     try {
+    //         const response = await axios.delete(`https://salonbe-mcw5.onrender.com/storage/${id}`);
+    //         alert(response.data.message);
+    //         setReservations((prevReservations) =>
+    //             prevReservations.filter((reservation) => reservation._id !== id)
+    //         );
+    //     } catch (error) {
+    //         console.error(error);
+    //         alert("Failed to delete this reservation");
+    //     }
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
