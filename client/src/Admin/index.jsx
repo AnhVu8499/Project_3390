@@ -4,6 +4,18 @@ import './styles.css';
 const AdminDashboard = ({ handleGoBack }) => {
     const [reservations, setReservations] = useState([]);
 
+    const deletedReservation = async () => {
+        try {
+            const response = await axios.delete('https://salonbe-mcw5.onrender.com/storage/autoDelete');
+            alert(response.data.message);
+            const updatedReservation = await axios.get('https://your-api-url.com/storage');
+            setReservations(updatedResponse.data);
+        } catch (error) {
+            console.error(error);
+            alert('Failed to delete past reservation');
+        }
+    }
+
     useEffect(() => {
         // Fetch reservations from the API when the component mounts
         const fetchReservations = async () => {
@@ -21,19 +33,8 @@ const AdminDashboard = ({ handleGoBack }) => {
         };
 
         fetchReservations();
+        deletedReservation();
     }, []);
-
-    const deletedReservation = async () => {
-        try {
-            const response = await axios.delete('https://salonbe-mcw5.onrender.com/storage/autoDelete');
-            alert(response.data.message);
-            const updatedReservation = await axios.get('https://your-api-url.com/storage');
-            setReservations(updatedResponse.data);
-        } catch (error) {
-            console.error(error);
-            alert('Failed to delete past reservation');
-        }
-    }
 
     return (
         <div className="admin-dashboard">
