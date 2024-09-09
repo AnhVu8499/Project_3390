@@ -21,10 +21,10 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        serviceType: '',
-        subService: '', 
         date: '',
-        time: ''
+        time: '',
+        serviceType: '',
+        subService: ''
     });
     
     for (let i = 0; i<24*60; i+=15) {
@@ -114,7 +114,9 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                     name: '',
                     email: '',
                     date: '',
-                    time: ''
+                    time: '',
+                    serviceType: '',
+                    subService: ''
                 });
                 setShowverfied(false);
             } else {

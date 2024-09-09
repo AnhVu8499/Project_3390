@@ -9,11 +9,11 @@ const MAX_ATTEMPTS = 3;
 // Add reservation and send verification code
 router.post("/", async (req, res) => {
     try {
-        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit code
-        const { name, email, date, time } = req.body;
+        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const { name, email, date, time, service } = req.body;  // Include service
 
         // Store pending verification data
-        pendingVerify[email] = { name, email, date, time, verificationCode, retryCount:0 };
+        pendingVerify[email] = { name, email, date, time, service, verificationCode, retryCount:0 };
 
         // Send verification code via email
         await sendVerificationEmail(email, verificationCode);
@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
         res.status(500).send({ message: "Internal server error" });
     }
 });
+
 
 // Function to send the verification email with the code
 const sendVerificationEmail = async (to, verificationCode) => {
@@ -79,20 +80,20 @@ router.post("/verify-email", async (req, res) => {
     }
 
     if (pendingReservation.verificationCode === code) {
-        // Save reservation to the database if the code is correct
-        const { name, date, time } = pendingReservation;
-        const newReservation = new Reservation({ name, email, date: new Date(date), time, verified: true });
-
+        const { name, date, time, service } = pendingReservation;
+        const newReservation = new Reservation({ name, email, date: new Date(date), time, service, verified: true });
+    
         await newReservation.save();
-
+    
         // Send confirmation email after successful verification
-        await confirmation(email, name, date, time, code);
-
-        // Remove the pending reservation from memory after successful verification
+        await confirmation(email, name, date, time);
+    
+        // Remove the pending reservation
         delete pendingVerify[email];
-
+    
         res.status(200).send({ message: "Email verified and reservation saved successfully" });
-    } else {
+    }
+     else {
         pendingReservation.retryCount = (pendingReservation.retryCount || 0) + 1;
 
         if (pendingReservation.retryCount >= MAX_ATTEMPTS) {
