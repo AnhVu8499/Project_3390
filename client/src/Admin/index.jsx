@@ -33,7 +33,8 @@ const AdminDashboard = ({ handleGoBack }) => {
                         <th>Email</th>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Service</th>
+                        <th>Service Type</th>
+                        <th>Sub Service</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +45,8 @@ const AdminDashboard = ({ handleGoBack }) => {
                                 <td>{reservation.email}</td>
                                 <td>{new Date(reservation.date).toLocaleDateString()}</td>
                                 <td>{reservation.time}</td>
-                                <td>{reservation.service}</td>
+                                <td>{reservation.serviceType}</td>
+                                <td>{reservation.subService}</td>
                                 {/* <td>{reservation.verified ? 'Verified' : 'Pending'}</td> */}
                             </tr>
                         ))

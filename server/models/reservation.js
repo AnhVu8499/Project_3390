@@ -22,9 +22,13 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-    service: {
+    serviceType: {
         type: String,
-        required:true
+        required: true
+    },
+    subService: {
+        type: String,
+        required: true
     },
     verified: {
         type: Boolean,
