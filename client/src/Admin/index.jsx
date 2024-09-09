@@ -3,7 +3,29 @@ import './styles.css';
 
 const AdminDashboard = ({ handleGoBack }) => {
     const [reservations, setReservations] = useState([]);
-
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this reservation?");
+        if (!confirmDelete) return;
+    
+        try {
+            const res = await fetch(`https://salonbe-mcw5.onrender.com/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (res.ok) {
+                alert("Reservation deleted successfully.");
+                setReservations(prevReservations => prevReservations.filter(reservation => reservation._id !== id));
+            } else {
+                alert("Failed to delete the reservation.");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Network error.");
+        }
+    }
     useEffect(() => {
         // Fetch reservations from the API when the component mounts
         const fetchReservations = async () => {
@@ -47,6 +69,10 @@ const AdminDashboard = ({ handleGoBack }) => {
                                 <td>{reservation.time}</td>
                                 <td>{reservation.serviceType}</td>
                                 <td>{reservation.subService}</td>
+                                <td>
+                                    {/* Add delete button */}
+                                    <button onClick={() => handleDelete(reservation._id)}>Delete</button>
+                                </td>
                                 {/* <td>{reservation.verified ? 'Verified' : 'Pending'}</td> */}
                             </tr>
                         ))
