@@ -10,10 +10,10 @@ const MAX_ATTEMPTS = 3;
 router.post("/", async (req, res) => {
     try {
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit code
-        const { name, email, date, time, service } = req.body;
+        const { name, email, date, time } = req.body;
 
         // Store pending verification data
-        pendingVerify[email] = { name, email, date, time, service, verificationCode, retryCount:0 };
+        pendingVerify[email] = { name, email, date, time, verificationCode, retryCount:0 };
 
         // Send verification code via email
         await sendVerificationEmail(email, verificationCode);
@@ -44,7 +44,7 @@ const sendVerificationEmail = async (to, verificationCode) => {
     });
 };
 
-const confirmation = async (to, name, date, time, service) => {
+const confirmation = async (to, name, date, time) => {
     const transporter = nodemailer.createTransport({
         service:'gmail',
         auth: {
@@ -63,17 +63,12 @@ const confirmation = async (to, name, date, time, service) => {
             <div> <strong>Name</strong>: ${name}</div>
             <div> <strong>Date</strong>: ${date}</div>
             <div> <strong>Time</strong>: ${time}</div>
-            <div> <strong>Service</strong>: ${service}</div>
         </form>`
 
     });
 };
 
 // Verify the email with the code
-router.get("/verify-email", async (req, res) => {
-    res.status(200).send({ message :" Working " });
-});
-
 router.post("/verify-email", async (req, res) => {
     const { email, code } = req.body;
     
@@ -85,8 +80,8 @@ router.post("/verify-email", async (req, res) => {
 
     if (pendingReservation.verificationCode === code) {
         // Save reservation to the database if the code is correct
-        const { name, date, time, service } = pendingReservation;
-        const newReservation = new Reservation({ name, email, date: new Date(date), time, service, verified: true });
+        const { name, date, time } = pendingReservation;
+        const newReservation = new Reservation({ name, email, date: new Date(date), time, verified: true });
 
         await newReservation.save();
 
@@ -121,7 +116,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Delete info manually
+// Delete info
 router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -134,21 +129,6 @@ router.delete("/:id", async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: "Internal server error "});
-    }
-});
-
-router.delete("/autoDelete", async (req, res) => {
-    try {
-        const today = new Date();
-        const result = await Reservation.deleteMany({ date: { $lt: today }});
-        if (result.deletedCount > 0) {
-            res.status(200).send({ message: `${result.deletedCount} past reservations deleted` });
-        } else {
-            res.status(404).send({ message: "No past reservations found" });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send({ message: "Internal server error" });
     }
 });
 

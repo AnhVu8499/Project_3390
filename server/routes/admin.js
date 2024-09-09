@@ -20,7 +20,7 @@ router.post('/send-admin-verification', async (req, res) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: ownerEmail,
+                user: process.env.USER,
                 pass: process.env.PASS,
             },
         });

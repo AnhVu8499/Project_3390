@@ -72,19 +72,6 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
             setSubServices(filteredSubServices);
         }
     };
-    
-    // const deleteManually = async () => {
-    //     try {
-    //         const response = await axios.delete(`https://salonbe-mcw5.onrender.com/storage/${id}`);
-    //         alert(response.data.message);
-    //         setReservations((prevReservations) =>
-    //             prevReservations.filter((reservation) => reservation._id !== id)
-    //         );
-    //     } catch (error) {
-    //         console.error(error);
-    //         alert("Failed to delete this reservation");
-    //     }
-    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -110,7 +97,7 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
         }
     }
     
-    const handleVerification = async () => {
+    const handleVerfication = async () => {
         try {
             //const res = await fetch('http://localhost:3001/storage/verify-email', {
             const res = await fetch('https://salonbe-mcw5.onrender.com/storage/verify-email', {
@@ -118,7 +105,7 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formData.email.trim(), code: verificationCode })
+                body: JSON.stringify({ email: formData.email.trim(), code: verificationCode.trim() })
             });
 
             if (res.ok) {
@@ -126,8 +113,6 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                 setFormData({
                     name: '',
                     email: '',
-                    serviceType: '',
-                    subService: '', 
                     date: '',
                     time: ''
                 });
@@ -136,10 +121,8 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                 alert('Érvénytelen kód.');
             }
         } catch (error) {
-            console.error('Error details:', error);
-            alert('Network error.');
-            // console.error(error);
-            // alert('Hálózati hiba.');
+            console.error(error);
+            alert('Hálózati hiba.');
         }
     };
 
@@ -263,7 +246,7 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                                 placeholder="Megerősítő kód." 
                                 required 
                             />
-                            <button onClick={handleVerification}>Kód ellenőrzése.</button>
+                            <button onClick={handleVerfication}>Kód ellenőrzése.</button>
                         </div>
                     )}
     
