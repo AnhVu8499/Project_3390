@@ -22,6 +22,10 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         required:true
     },
+    service: {
+        type: String,
+        required:true
+    },
     verified: {
         type: Boolean,
         default: false
