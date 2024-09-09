@@ -70,6 +70,10 @@ const confirmation = async (to, name, date, time, service) => {
 };
 
 // Verify the email with the code
+router.get("/verify-email", async (req, res) => {
+    res.status(200).send({ message :" Working " });
+});
+
 router.post("/verify-email", async (req, res) => {
     const { email, code } = req.body;
     

@@ -110,7 +110,7 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
         }
     }
     
-    const handleVerfication = async () => {
+    const handleVerification = async () => {
         try {
             //const res = await fetch('http://localhost:3001/storage/verify-email', {
             const res = await fetch('https://salonbe-mcw5.onrender.com/storage/verify-email', {
@@ -259,7 +259,7 @@ const ServiceList = ({ bookingSectionRef, handleGoBack, showAdmin, showVerificat
                                 placeholder="Megerősítő kód." 
                                 required 
                             />
-                            <button onClick={handleVerfication}>Kód ellenőrzése.</button>
+                            <button onClick={handleVerification}>Kód ellenőrzése.</button>
                         </div>
                     )}
     
