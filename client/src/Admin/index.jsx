@@ -9,7 +9,7 @@ const AdminDashboard = ({ handleGoBack }) => {
         if (!confirmDelete) return;
     
         try {
-            const res = await fetch(`https://salonbe-mcw5.onrender.com/${id}`, {
+            const res = await fetch(`https://salonbe-mcw5.onrender.com/storage/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -72,6 +72,7 @@ const AdminDashboard = ({ handleGoBack }) => {
                                 <td>{reservation.serviceType}</td>
                                 <td>{reservation.subService}</td>
                                 <td>
+                                    {/* Add delete button */}
                                     <button onClick={() => handleDelete(reservation._id)}>Delete</button>
                                 </td>
                                 {/* <td>{reservation.verified ? 'Verified' : 'Pending'}</td> */}
