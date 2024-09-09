@@ -4,17 +4,17 @@ import './styles.css';
 const AdminDashboard = ({ handleGoBack }) => {
     const [reservations, setReservations] = useState([]);
 
-    const deletedReservation = async () => {
-        try {
-            const response = await axios.delete('https://salonbe-mcw5.onrender.com/storage/autoDelete');
-            alert(response.data.message);
-            const updatedReservation = await axios.get('https://your-api-url.com/storage');
-            setReservations(updatedResponse.data);
-        } catch (error) {
-            console.error(error);
-            alert('Failed to delete past reservation');
-        }
-    }
+    // const deletedReservation = async () => {
+    //     try {
+    //         const response = await axios.delete('https://salonbe-mcw5.onrender.com/storage/autoDelete');
+    //         alert(response.data.message);
+    //         const updatedReservation = await axios.get('https://salonbe-mcw5.onrender.com/storage');
+    //         setReservations(updatedResponse.data);
+    //     } catch (error) {
+    //         console.error(error);
+    //         alert('Failed to delete past reservation');
+    //     }
+    // }
 
     useEffect(() => {
         // Fetch reservations from the API when the component mounts
@@ -33,7 +33,7 @@ const AdminDashboard = ({ handleGoBack }) => {
         };
 
         fetchReservations();
-        deletedReservation();
+        // deletedReservation();
     }, []);
 
     return (
@@ -58,9 +58,9 @@ const AdminDashboard = ({ handleGoBack }) => {
                                 <td>{new Date(reservation.date).toLocaleDateString()}</td>
                                 <td>{reservation.time}</td>
                                 <td>{reservation.service}</td>
-                                <td>
+                                {/* <td>
                                     <button onClick={() => handleDelete(reservation._id)}>Delete</button>
-                                </td>
+                                </td> */}
                                 {/* <td>{reservation.verified ? 'Verified' : 'Pending'}</td> */}
                             </tr>
                         ))
@@ -72,7 +72,7 @@ const AdminDashboard = ({ handleGoBack }) => {
                 </tbody>
             </table>
             <button onClick={ handleGoBack }>Go Back</button>
-            <button onClick={deletedReservation}>Delete Past Reservations</button>
+            {/* <button onClick={deletedReservation}>Delete Past Reservations</button> */}
         </div>
     );
 };
