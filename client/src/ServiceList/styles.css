@@ -87,6 +87,7 @@ input, select {
     cursor: pointer;
     object-fit: cover;
 }
+
 .menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Creates 4 equal columns */
@@ -118,14 +119,23 @@ input, select {
     font-size: 1.2em; 
 }
 
-#menu-container {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
+/* Responsive design for tablets */
+@media screen and (max-width: 768px) {
+    .menu {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+    }
 }
 
+/* Responsive design for mobile phones */
+@media screen and (max-width: 480px) {
+    .menu {
+        grid-template-columns: 1fr; /* 1 column for mobile */
+    }
+}
+
+/* Additional styling for text inside the menu items */
 #menu-service {
-    margin-right: 20px; /* Space between service and price */
+    margin-right: 20px; 
     font-size: 1em; 
     color: #333;
 }
@@ -133,9 +143,20 @@ input, select {
 #menu-price {
     font-size: 1em; 
     color: #333;
-    font-weight: bold; /* Bold text for price */
+    font-weight: bold; 
 }
 
+#menu-service {
+    margin-right: 20px; 
+    font-size: 1em; 
+    color: #333;
+}
+
+#menu-price {
+    font-size: 1em; 
+    color: #333;
+    font-weight: bold; 
+}
 
 .verify-code-box {
     display: flex;
@@ -166,5 +187,4 @@ input, select {
     background-color: #7a9cc7;
     transform: scale(1.05);
 }
-
 
