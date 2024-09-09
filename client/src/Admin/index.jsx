@@ -19,6 +19,7 @@ const AdminDashboard = ({ handleGoBack }) => {
                 alert("Reservation deleted successfully.");
                 setReservations(prevReservations => prevReservations.filter(reservation => reservation._id !== id));
             } else {
+                alert(`Attempting to delete reservation with ID: ${id}`);
                 alert("Failed to delete the reservation.");
             }
         } catch (err) {
