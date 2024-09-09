@@ -34,3 +34,54 @@ td[colspan="5"] {
     text-align: center;
     padding: 20px; 
 }
+
+@media screen and (max-width:768px) {
+    table {
+        display: block;
+        width:100%;
+        overflow-x: auto;
+    }
+    th, td {
+        padding:10px;
+        font-size: 14px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+    h1 {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Reduce padding and font sizes for smaller screens */
+    th, td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Table layout adjustment */
+    table {
+        display: block;
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    /* Consider hiding some columns on very small screens */
+    th:nth-child(4), td:nth-child(4), /* Date column */
+    th:nth-child(5), td:nth-child(5)  /* Service column */ {
+        display: none;
+    }
+}
+
