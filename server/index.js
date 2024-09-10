@@ -17,7 +17,7 @@ connection();
 app.use(express.json());
 
 app.use(cors({
-    origin: 'https://salonfe.onrender.com',
+    origin: 'https://www.parisnailsbeauty.com/',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
