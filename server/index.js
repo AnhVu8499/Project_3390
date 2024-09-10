@@ -17,7 +17,7 @@ connection();
 app.use(express.json());
 
 app.use(cors({
-    origin: 'https://parisnailsbeauty.com/',
+    origin: 'https://parisnailsbeauty.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
