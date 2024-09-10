@@ -16,11 +16,31 @@ const app = express();
 connection();
 app.use(express.json());
 
+const allowedOrigins = [
+  'https://parisnailsbeauty.com',
+  'https://www.parisnailsbeauty.com', 
+  'https://salonfe.onrender.com'    
+];
+
 app.use(cors({
-    origin: 'https://parisnailsbeauty.com',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
+
+
+// app.use(cors({
+//     origin: 'https://parisnailsbeauty.com',
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true
+// }));
 
 app.use("/storage", reservationRoutes);
 app.use("/main", serviceRoutes);
